@@ -25,5 +25,4 @@ jobs:
 
       - name: Build APK
         run: |
-          export APP_ANDROID_ACCEPT_SDK_LICENSE=1
           echo "y" | buildozer android debug
