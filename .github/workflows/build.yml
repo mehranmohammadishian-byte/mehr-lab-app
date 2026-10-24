@@ -3,19 +3,14 @@ on: [push, workflow_dispatch]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Build APK using Kivy Docker Image
-        uses: addnab/docker-run-action@v3
-        with:
-          image: kivy/buildozer:latest
-          options: -v ${{ github.workspace }}:/home/user/app -w /home/user/app
-          run: |
-            buildozer android debug
+        run: |
+          docker run --rm -v "${{ github.workspace }}":/home/user/hostcwd -w /home/user/hostcwd kivy/buildozer:latest buildozer android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
